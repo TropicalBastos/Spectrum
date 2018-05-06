@@ -15,9 +15,15 @@ void Spectrum::createSpectrum(int width, int height, const char* output){
     float spectrum = src.mapWidthToSpectrum();
 
     for(int i = 0;  i < (width * height);){
-        for(int j = 0;  j < width; j++){
-            float delta = Spectrum::normalize((spectrum * j), width, 0.0f, 0.0f, 1.0f);
-            Spectrum::Rgb rgb(Spectrum::buildSpectrumPixel(rgbBuf, delta));
+        for(int j = 0;  j < (width / 2); j++){
+            float delta = Spectrum::normalize((spectrum * j), (width / 2), 0.0f, 0.0f, 1.0f);
+            Spectrum::Rgb rgb(Spectrum::buildSpectrumPixel(rgbBuf, delta, Spectrum::SPECTRUM_GREEN));
+            src.pixels[i] = rgb;
+            i++;
+        }
+        for(int j = (width / 2);  j > 0; j--){
+            float delta = Spectrum::normalize((spectrum * j), (width / 2), 0.0f, 0.0f, 1.0f);
+            Spectrum::Rgb rgb(Spectrum::buildSpectrumPixel(rgbBuf, delta, Spectrum::SPECTRUM_RED));
             src.pixels[i] = rgb;
             i++;
         }
@@ -46,9 +52,15 @@ void Spectrum::createSpectrum(int width, int height, const char* output){
     }
 }
 
-Spectrum::Rgb Spectrum::buildSpectrumPixel(Spectrum::Rgb& rgb, float delta){
+Spectrum::Rgb Spectrum::buildSpectrumPixel(Spectrum::Rgb& rgb, float delta, int stage){
     //printf("%.3f\n", rgb.r - delta);
-    Spectrum::Rgb rgbNew(rgb.r + delta, rgb.g, rgb.b - delta);
+    Spectrum::Rgb rgbNew;
+
+    if(stage == SPECTRUM_GREEN)
+        rgbNew = Rgb(rgb.r, rgb.g + delta, rgb.b - delta);
+    else
+        rgbNew = Rgb(rgb.r - delta, rgb.g + delta, 0);
+
     return rgbNew;
 }
 

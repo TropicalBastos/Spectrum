@@ -40,8 +40,12 @@ public:
     static const Rgb kBlack, kWhite, kRed, kGreen, kBlue; // Preset colors
     static Rgb getRandomColor();
     static void createSpectrum(int width, int height, const char* output);
-    static Rgb buildSpectrumPixel(Rgb&, float);
+    static Rgb buildSpectrumPixel(Rgb&, float, int);
     float mapWidthToDepth();
     float mapWidthToSpectrum();
     static float normalize(float, float, float, float, float);
+
+    /* STAGES - for pixelbuilder */
+    static const int SPECTRUM_GREEN = 0;
+    static const int SPECTRUM_RED = 1;
 }; 
