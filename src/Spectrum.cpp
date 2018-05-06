@@ -66,10 +66,6 @@ float Spectrum::normalize (float value, float maxInRange, float minInRange, floa
     return result;
 }
 
-
-/**
- * Gets a random color, referring to the QT implementation
- */ 
 Spectrum::Rgb Spectrum::getRandomColor(){
     float r = rand() % 255, g = rand() % 255, b = rand() % 255;
     Spectrum::Rgb rgb(r, g, b);
