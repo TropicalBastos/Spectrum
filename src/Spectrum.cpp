@@ -29,8 +29,6 @@ void Spectrum::createSpectrum(int width, int height, const char* output){
         }
     }
 
-    printf("%s", output);
-
     std::ofstream ofs; 
     try { 
         ofs.open(output, std::ios::binary); // need to spec. binary mode for Windows users 
