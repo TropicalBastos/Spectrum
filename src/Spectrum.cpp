@@ -13,10 +13,12 @@ void Spectrum::createSpectrum(int width, int height, const char* output){
     Spectrum::Rgb rgbBuf(0, 0, 1);
     float mapped = src.mapWidthToDepth();
     float spectrum = src.mapWidthToSpectrum();
+    int count = 0;
 
     for(int i = 0;  i < (width * height);){
         for(int j = 0;  j < (width / 2); j++){
             float delta = Spectrum::normalize((spectrum * j), (width / 2), 0.0f, 0.0f, 1.0f);
+            //printf("%.4f\n", delta);
             Spectrum::Rgb rgb(Spectrum::buildSpectrumPixel(rgbBuf, delta, Spectrum::SPECTRUM_GREEN));
             src.pixels[i] = rgb;
             i++;
@@ -67,7 +69,7 @@ float Spectrum::mapWidthToDepth(){
 }
 
 float Spectrum::mapWidthToSpectrum(){
-    return float((255 + 255 + 255) / this->w);
+    return float((255 + 255 + 255) / float(this->w));
 }
 
 float Spectrum::normalize (float value, float maxInRange, float minInRange, float minOutRange, float maxOutRange) {
